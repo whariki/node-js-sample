@@ -50,8 +50,8 @@ var cheerioHtmlFile = function(htmlfile) {
     return cheerio.load(fs.readFileSync(htmlfile));
 };
 
-var cheerioUrl = function(url) {
-    return cheerio.load(rest.get(url.on('complete',checkUrl)));
+var cheerioHtmlUrl = function(url) {
+    return cheerio.load(rest.get(url).on('complete',checkUrl));
 };
 
 var loadChecks = function(checksfile) {
@@ -74,7 +74,7 @@ var checkUrl = function(result, response) {
 	console.error('Error: ' + util.format(response.message));
 	program.help();
     } else {
-	return response;
+	return result;
     }
 };
 
