@@ -40,8 +40,8 @@ var URL_DEFAULT = "safe-mountain-5602.herokuapp.com";
 var assertFileExists = function(infile) {
     var instr = infile.toString();
     if(!fs.existsSync(instr)) {
-	console.log("%s does not exist. Exiting.", instr);
-	process.exit(1); // http://nodejs.org/api/process.html#process_process_exit_code
+		console.log("%s does not exist. Exiting.", instr);
+		process.exit(1); // http://nodejs.org/api/process.html#process_process_exit_code
     }
     return instr;
 };
@@ -63,18 +63,18 @@ var checkHtmlFile = function(htmlfile, checksfile) {
     var checks = loadChecks(checksfile).sort();
     var out = {};
     for(var ii in checks) {
-	var present = $(checks[ii]).length > 0;
-	out[checks[ii]] = present;
+		var present = $(checks[ii]).length > 0;
+		out[checks[ii]] = present;
     }	
     return out;
 };
 
 var checkUrl = function(result, response) {
     if (result instanceof Error) {
-	console.error('Error: ' + util.format(response.message));
-	program.help();
+		console.error('Error: ' + util.format(result.message));
+		program.help();
     } else {
-	return result;
+		return result;
     }
 };
 
@@ -83,8 +83,8 @@ var checkHtmlUrl = function(url, checksfile) {
     var checks = loadChecks(checksfile).sort();
     var out = {};
     for(var ii in checks) {
-	var present = $(checks[ii]).length > 0;
-	out[checks[ii]] = present;
+		var present = $(checks[ii]).length > 0;
+		out[checks[ii]] = present;
     }
     return out;
 };
@@ -102,14 +102,14 @@ if(require.main == module) {
 	.option('-u, --url [url]', 'URL of html to check')
 	.parse(process.argv);
     if(program.file) {
-	var checkJson = checkHtmlFile(program.file, program.checks);
+		var checkJson = checkHtmlFile(program.file, program.checks);
     } else if(program.url) {
-	var checkJson = checkHtmlUrl(program.url, program.checks);
+		var checkJson = checkHtmlUrl(program.url, program.checks);
     } else {
-	program.help();
+		program.help();
     }
-    var outJson = JSON.stringify(checkJson, null, 4);
-    console.log(outJson);
+		var outJson = JSON.stringify(checkJson, null, 4);
+		console.log(outJson);
 } else {
     exports.checkHtmlFile = checkHtmlFile;
 }
