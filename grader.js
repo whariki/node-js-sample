@@ -35,7 +35,7 @@ var util = require('util');
 
 var HTMLFILE_DEFAULT = "index.html";
 var CHECKSFILE_DEFAULT = "checks.json";
-var URL_DEFAULT = "safe-mountain-5602.herokuapp.com";
+var URL_DEFAULT = "http://safe-mountain-5602.herokuapp.com";
 
 var DEBUG_LEVEL = 0;   // 0 = no debug
 
@@ -78,7 +78,7 @@ var buildfn = function(checksfile) {
         if (result instanceof Error) {
             console.error('Error: ' + util.format(result.message));
         } else {
-            var checkJson = checkHtml(result, checksfile, INPUT_STRING);
+            var checkJson = checkHtml(result, checksfile);
             var outJson = JSON.stringify(checkJson, null, 4);
             console.log(outJson);
         }
@@ -130,11 +130,12 @@ if(require.main == module) {
         .parse(process.argv);
     
     if(program.file) {
-        console.log("Checking %s for tags listed in %s.\n",[program.file,program.checks]);
+        console.error("Checking %s for tags listed in %s.\n",program.file,program.checks);
         var checkJson = checkHtmlFile(program.file, program.checks);
         var outJson = JSON.stringify(checkJson, null, 4);
         console.log(outJson);
     } else if(program.url) { 
+	console.error("Checking \"%s\" for tags listed in \"%s\"",program.url, program.checks);
         var checkJson2Console = buildfn(program.checks);
         rest.get(program.url).on('complete',checkJson2Console);
     } else {
